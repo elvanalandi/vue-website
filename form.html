@@ -1,0 +1,63 @@
+<!D0CTYPE html>
+<html>
+<head>
+    <title>Form</title>
+    <script>
+        function inputForm(){
+            name_to_console = document.getElementById("name").value;
+            university_to_console = document.getElementById("university").value;
+            email_to_console = document.getElementById("email").value;
+            console.log(name_to_console+"\n"+university_to_console+"\n"+email_to_console);
+        }
+    </script>
+    <style>
+        body {
+            background-color: black;
+        }
+        div {
+            border: 10px solid whitesmoke;
+            margin: 0 auto;
+            padding: 10px;
+            border-radius: 10px;
+            width: 30%;
+            background-color: white;
+        }
+        h1{
+            text-align: center;
+            color: white;
+        }
+        form {
+            margin: 0 auto;
+            width: 250px;
+        }
+        input {
+            padding: 15px 32px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+        #input_submit {
+            background-color: #4caf4c;
+            border: none;
+            border-radius: 10px;
+            margin: 0 auto;
+            color: white;
+            margin-left: 40px;
+            font-size: 16px;
+            text-align: center;
+            padding: 15px 32px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Form</h1>
+    <div>
+        <form>
+                <input type="text" id="name" placeholder="Name">
+                <input type="text" id="university" placeholder="University">
+                <input type="text" id="email" placeholder="Email">
+                <button type="button" id="input_submit" onclick="inputForm()">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
