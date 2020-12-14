@@ -16,11 +16,12 @@
   import { Component, Prop, Vue } from 'vue-property-decorator';
   import Mahasiswa from './../entity/Mahasiswa';
   import Admin from './../entity/Admin';
+  import router from '../router';
 
   @Component
   export default class UserForm extends Vue {
     private nameForm = "";
-    private idForm = "";
+    private idForm = 0;
     private roleForm = "";
 
     public showToConsole(): void {
@@ -29,7 +30,7 @@
         admin.id = this.idForm;
         admin.nama = this.nameForm;
         admin.nip = this.idForm;
-        setData(admin);
+        this.setData(admin);
         router.push({name: "Login"});
         this.$notify({
             group: 'userNotification',
@@ -41,7 +42,7 @@
         mahasiswa.id = this.idForm;
         mahasiswa.nama = this.nameForm;
         mahasiswa.nim = this.idForm;
-        setData(mahasiswa);
+        this.setData(mahasiswa);
         router.push({name: "Login"});
         this.$notify({
             group: 'userNotification',
@@ -52,19 +53,19 @@
         alert("Choose Role!");
       }
     }
-  }
 
-  export function setData(user) {
-    var userArray = [];
-    if(JSON.parse(localStorage.getItem('userData')) !== null){
-      userArray = JSON.parse(localStorage.getItem('userData'));
+    public setData(user: Object): void{
+      let userStorageData = localStorage.getItem('userData');
+      var userArray = [];
+      if(userStorageData != null){
+        userArray = JSON.parse(userStorageData);
+      }
+      localStorage.removeItem('userData');
+      userArray.push(user);
+      localStorage.setItem('userData', JSON.stringify(userArray));
+
     }
-    localStorage.removeItem('userData');
-    userArray.push(user);
-    localStorage.setItem('userData', JSON.stringify(userArray));
-
   }
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

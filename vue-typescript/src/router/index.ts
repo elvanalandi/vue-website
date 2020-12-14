@@ -38,14 +38,21 @@ const router = new VueRouter({
 })
 
 
-// router.beforeEach((to, from, next) => {
-//   let loggedIn: boolean = false;
-//   if(to.name !== 'Login' && !loggedIn){
-//     loggedIn = true;
-//     next()
-//   }else{ 
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  let loggedIn: boolean = false;
+
+  if(localStorage.getItem('currentUser') != null){
+    loggedIn = true;
+  }else{
+    loggedIn = false;
+  }
+
+  if(to.name == 'Login' && loggedIn){
+    next({name: 'Home'});
+  }else{
+    next();
+  }
+
+})
 
 export default router

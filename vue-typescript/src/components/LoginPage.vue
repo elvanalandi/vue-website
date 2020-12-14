@@ -6,6 +6,7 @@
     <input type="text" v-model="nameForm" placeholder="Username">
     <br>
     <button v-on:click="login()">Login</button>
+    <button v-on:click="register()">Register</button>
   </div>
 </template>
 
@@ -18,27 +19,39 @@
   @Component
   export default class LoginPage extends Vue {
     private nameForm = "";
-    private idForm = "";
+    private idForm = 0;
     private roleForm = "";
 
     public login(): void {
       var userArray = [];
       var user;
-      userArray = JSON.parse(localStorage.getItem('userData'));
-      if(userArray != null){
+      var validate = true;
+      let userStorageData = localStorage.getItem('userData');
+      if(userStorageData != null){
+        userArray = JSON.parse(userStorageData);
         let tempUser = userArray;
         for (let i in userArray){
           if(tempUser[i].id == this.idForm){
-            localStorage.setItem('currentUser', JSON.stringify(tempUser[i]));
-            router.push({name: "Home"});
-            this.$notify({
-              group: 'userNotification',
-              title: 'Login Success!'
-            });
-            break;
+            if(tempUser[i].nama == this.nameForm){
+              localStorage.setItem('currentUser', JSON.stringify(tempUser[i]));
+              router.push({name: "Home"});
+              this.$notify({
+                group: 'userNotification',
+                title: 'Login Success!'
+              });
+              validate = true;
+              break;
+            }
           }
         }
+        if(!validate){
+          alert("Your id or username is incorrect!");
+        }
       }
+    }
+
+    public register(): void {
+      router.push({name: "Register"});
     }
   }
 
@@ -59,5 +72,8 @@ li {
 }
 a {
   color: #42b983;
+}
+button {
+  margin : 10px;
 }
 </style>

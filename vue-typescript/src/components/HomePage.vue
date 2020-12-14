@@ -1,8 +1,15 @@
 <template>
   <div class="user">
-    <h1>Welcome {{ msg }} </h1>
-    <br>
-    <button v-on:click="logout()">Logout</button>
+    <div v-if="currentUserData == null">
+      <h1>Login first!</h1>
+      <br>
+      <button v-on:click="login()">Login</button>
+    </div>
+    <div v-if="currentUserData != null">
+      <h1>Welcome {{ msg }} </h1>
+      <br>
+      <button v-on:click="logout()">Logout</button>
+    </div>
   </div>
 </template>
 
@@ -12,12 +19,15 @@
   
   @Component
   export default class HomePage extends Vue {
-      private msg: string = JSON.parse(localStorage.getItem('currentUser')).nama;
-
-      public logout(): void{
-          localStorage.removeItem('currentUser');
-          router.push({name: "Login"});
-      }
+    private currentUserData = localStorage.getItem('currentUser');
+    private msg = this.currentUserData !== null ? JSON.parse(this.currentUserData).nama : "";
+    public logout(): void{
+      localStorage.removeItem('currentUser');
+      router.push({name: "Login"});
+    }
+    public login(): void{
+      router.push({name: "Login"});
+    }
   }
 
 </script>
