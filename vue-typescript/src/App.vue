@@ -39,9 +39,37 @@ div .user{
   margin: 0 auto;
   padding: 10px;
   border-radius: 10px;
-  width: 30%;
   background-color: white;
-}        
+  width: auto;
+  display: inline-block; 
+}
+
+table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+}
+
+table thead tr {
+  background-color: #4caf4c;
+  color: #ffffff;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+table tbody tr {
+    background-color: #f3f3f3;
+}
+
 input {
   padding: 15px 32px;
   margin-bottom: 10px;
@@ -58,4 +86,6 @@ button {
   text-align: center;
   padding: 15px 32px;
 }
+
+
 </style>
