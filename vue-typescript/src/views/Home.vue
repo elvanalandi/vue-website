@@ -1,17 +1,11 @@
 <template>
   <div class="home">
-    <UserForm/>
+    <h1>This is a home page</h1>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import UserForm from '@/components/UserForm.vue'; // @ is an alias to /src
 
-@Component({
-  components: {
-    UserForm,
-  },
-})
 export default class Home extends Vue {}
 </script>

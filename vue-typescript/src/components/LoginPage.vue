@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    <h1>User Form</h1>
+    <h1>Login</h1>
     <input type="number" v-model="idForm" placeholder="NIM/NIP">
     <br>
     <input type="text" v-model="nameForm" placeholder="Name">
@@ -8,7 +8,7 @@
     <input type="radio" v-model="roleForm" name="roleForm" value="0"> Admin
     <input type="radio" v-model="roleForm" name="roleForm" value="1"> Mahasiswa
     <br>
-    <button v-on:click="showToConsole()">Submit</button>
+    <button v-on:click="showToConsole()">Login</button>
   </div>
 </template>
 
@@ -18,7 +18,7 @@
   import Admin from './../entity/Admin';
 
   @Component
-  export default class UserForm extends Vue {
+  export default class LoginPage extends Vue {
     private nameForm = "";
     private idForm = "";
     private roleForm = "";
@@ -38,6 +38,13 @@
       }
     }
   }
+
+  export function getData(user): string{
+    var userArray = [];
+    userArray = JSON.parse(localstorage.getItem('userData'));
+    return userArray;
+  }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
