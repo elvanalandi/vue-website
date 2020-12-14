@@ -22,15 +22,18 @@
     private nameForm = "";
     private idForm = "";
     private roleForm = "";
+    
     public showToConsole(): void {
       if (this.roleForm == "0"){
         const admin: Admin = new Admin();
+        admin.id = this.idForm;
         admin.nama = this.nameForm;
         admin.nip = this.idForm;
         setData(admin);
         console.log("Admin",admin);
       }else if(this.roleForm == "1"){
         const mahasiswa: Mahasiswa = new Mahasiswa();
+        mahasiswa.id = this.idForm;
         mahasiswa.nama = this.nameForm;
         mahasiswa.nim = this.idForm;
         setData(mahasiswa);

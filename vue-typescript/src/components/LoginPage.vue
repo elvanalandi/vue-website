@@ -3,12 +3,9 @@
     <h1>Login</h1>
     <input type="number" v-model="idForm" placeholder="NIM/NIP">
     <br>
-    <input type="text" v-model="nameForm" placeholder="Name">
+    <input type="text" v-model="nameForm" placeholder="Username">
     <br>
-    <input type="radio" v-model="roleForm" name="roleForm" value="0"> Admin
-    <input type="radio" v-model="roleForm" name="roleForm" value="1"> Mahasiswa
-    <br>
-    <button v-on:click="showToConsole()">Login</button>
+    <button v-on:click="login()">Login</button>
   </div>
 </template>
 
@@ -16,33 +13,33 @@
   import { Component, Prop, Vue } from 'vue-property-decorator';
   import Mahasiswa from './../entity/Mahasiswa';
   import Admin from './../entity/Admin';
+  import router from '../router';
 
   @Component
   export default class LoginPage extends Vue {
     private nameForm = "";
     private idForm = "";
     private roleForm = "";
-    public showToConsole(): void {
-      if (this.roleForm == "0"){
-        const admin: Admin = new Admin();
-        admin.nama = this.nameForm;
-        admin.nip = this.idForm;
-        console.log("Admin",admin);
-      }else if(this.roleForm == "1"){
-        const mahasiswa: Mahasiswa = new Mahasiswa();
-        mahasiswa.nama = this.nameForm;
-        mahasiswa.nim = this.idForm;
-        console.log("Mahasiswa",mahasiswa);
-      }else{
-        alert("Choose Role!");
+
+    public login(): void {
+      var userArray = [];
+      var user;
+      userArray = JSON.parse(localStorage.getItem('userData'));
+      if(userArray != null){
+        let tempUser = userArray;
+        for (let i in userArray){
+          if(tempUser[i].id == this.idForm){
+            localStorage.setItem('currentUser', JSON.stringify(tempUser[i]));
+            router.push({name: "Home"});
+            this.$notify({
+              group: 'userNotification',
+              title: 'Login Success!'
+            });
+            break;
+          }
+        }
       }
     }
-  }
-
-  export function getData(user): string{
-    var userArray = [];
-    userArray = JSON.parse(localstorage.getItem('userData'));
-    return userArray;
   }
 
 </script>

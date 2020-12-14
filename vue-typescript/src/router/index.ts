@@ -36,8 +36,16 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-router.beforeEach((to, from, next) => {
-  
-})
+
+
+// router.beforeEach((to, from, next) => {
+//   let loggedIn: boolean = false;
+//   if(to.name !== 'Login' && !loggedIn){
+//     loggedIn = true;
+//     next()
+//   }else{ 
+//     next()
+//   }
+// })
 
 export default router

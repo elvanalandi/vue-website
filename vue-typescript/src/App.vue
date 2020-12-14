@@ -7,6 +7,7 @@
       <router-link to="/register">Register</router-link>
     </div>
     <router-view/>
+    <notifications group="userNotification" />
   </div>
 </template>
 
