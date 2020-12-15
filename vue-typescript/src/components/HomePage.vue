@@ -16,7 +16,8 @@
             <th>Username</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>website</th>
+            <th>Website</th>
+            <th>City</th>
           </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@
             <td>{{ data.email }}</td>
             <td>{{ data.phone }}</td>
             <td>{{ data.website }}</td>
+            <td>{{ data.address.city }}</td>
           </tr>
         </tbody>
       </table>
@@ -45,8 +47,8 @@
   export default class HomePage extends Vue {
     private currentUserData = localStorage.getItem('currentUser');
     private msg = this.currentUserData !== null ? JSON.parse(this.currentUserData).nama : "";
-    private jsonData = [{}];
-
+    private jsonData = [];
+    
     constructor(){
       super();
       this.getUser();
