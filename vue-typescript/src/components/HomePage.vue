@@ -21,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="data in jsonData">
+          <tr v-for="data in jsonData" :key="data.id">
             <td>{{ data.id }}</td>
             <td>{{ data.name }}</td>
             <td>{{ data.username }}</td>
