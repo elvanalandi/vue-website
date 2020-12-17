@@ -14,13 +14,13 @@
 
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator';
-  import Mahasiswa from './../entity/Mahasiswa';
-  import Admin from './../entity/Admin';
+  // import Mahasiswa from './../entity/Mahasiswa';
+  // import Admin from './../entity/Admin';
   import router from '../router';
 
   @Component
   export default class UserForm extends Vue {
-    private nameForm = "";
+    /* private nameForm = "";
     private idForm = 0;
     private roleForm = "";
 
@@ -64,7 +64,7 @@
       userArray.push(user);
       localStorage.setItem('userData', JSON.stringify(userArray));
 
-    }
+    } */
   }
 </script>
 

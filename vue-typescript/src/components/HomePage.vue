@@ -45,7 +45,7 @@
 
   @Component
   export default class HomePage extends Vue {
-    private currentUserData = localStorage.getItem('currentUser');
+    /* private currentUserData = localStorage.getItem('currentUser');
     private msg = this.currentUserData !== null ? JSON.parse(this.currentUserData).nama : "";
     private jsonData = [];
     
@@ -69,7 +69,7 @@
     }
     public login(): void{
       router.push({name: "Login"});
-    }
+    } */
   }
 
 </script>

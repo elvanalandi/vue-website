@@ -1,5 +1,6 @@
+import Session from '@/common/Session'
 import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
+import VueRouter, { NavigationGuardNext, Route, RouteConfig, RouteRecord } from 'vue-router'
 import { component } from 'vue/types/umd'
 import Home from '../views/Home.vue'
 
@@ -38,21 +39,35 @@ const router = new VueRouter({
 })
 
 
-router.beforeEach((to, from, next) => {
-  let loggedIn: boolean = false;
+router.beforeEach((to: Route, from: Route, next: NavigationGuardNext) => {
+  const validate = (record: Route | RouteRecord, key: string) => {
+    record = record === null ? to : record;
 
-  if(localStorage.getItem('currentUser') != null){
-    loggedIn = true;
-  }else{
-    loggedIn = false;
+    return typeof record.meta[key] === "function" ? record.meta[key](to) : record.meta[key];
   }
 
-  if(to.name == 'Login' && loggedIn){
-    next({name: 'Home'});
-  }else{
-    next();
+  const requiredAuth: boolean = to.matched.some((r: RouteRecord) => validate(r, "requiredAuth"));
+  const deniedAuth: boolean = to.matched.some((r: RouteRecord) => validate(r, "deniedAuth"));
+
+  // if(localStorage.getItem('currentUser') != null){
+  //   loggedIn = true;
+  // }else{
+  //   loggedIn = false;
+  // }
+
+  // if(to.name == 'Login' && loggedIn){
+  //   next({name: 'Home'});
+  // }else{
+  //   next();
+  // }
+
+  if(requiredAuth && !Session.isLogin()) {
+    return next({path: "/login"});
+  } else if (Session.isLogin() && deniedAuth) {
+    return next({path: "/"});
   }
 
+  return next();
 })
 
 export default router

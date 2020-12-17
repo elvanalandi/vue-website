@@ -1,4 +1,5 @@
 import { deserialize, inheritSerialization, serialize } from "cerialize";
+
 import BaseEntity from "./BaseEntity";
 
 @inheritSerialization(BaseEntity)

@@ -12,13 +12,13 @@
 
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator';
-  import Mahasiswa from './../entity/Mahasiswa';
-  import Admin from './../entity/Admin';
+  // import Mahasiswa from './../entity/Mahasiswa';
+  // import Admin from './../entity/Admin';
   import router from '../router';
 
   @Component
   export default class LoginPage extends Vue {
-    private nameForm = "";
+    /* private nameForm = "";
     private idForm = 0;
     private roleForm = "";
 
@@ -52,7 +52,7 @@
 
     public register(): void {
       router.push({name: "Register"});
-    }
+    } */
   }
 
 </script>

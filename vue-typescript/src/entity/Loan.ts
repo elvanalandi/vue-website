@@ -8,7 +8,8 @@ export default class Loan extends BaseEntity {
     public static STATUS: any = {
         BORROWED: "BORROWED",
         RETURNED: "RETURNED"
-    }
+    };
+
     @deserialize
     @serialize
     public status: string = "";
