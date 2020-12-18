@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import {get} from "lodash";
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import Axios, {AxiosResponse, AxiosError} from 'axios';
 
 import LibraryUser from '../entity/LibraryUser';
@@ -79,6 +79,7 @@ export default class Login extends Vue {
                 group: 'userNotification',
                 title: 'Connection Failed!'
             });
+            
         }).finally(() => {
           this.isLoading = false;
         })
