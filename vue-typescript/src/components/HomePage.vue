@@ -1,12 +1,6 @@
 <template>
   <div class="user">
-    <!-- <div v-if="currentUserData == null">
-      <h1>Login first!</h1>
-      <br>
-      <button v-on:click="login()">Login</button>
-    </div> -->
     <div v-if="currentUserData != null">
-      <!-- <h1>Welcome {{ msg }} </h1> -->
       <br>
       <table>
         <thead>
@@ -33,7 +27,6 @@
         </tbody>
       </table>
       <br>
-      <!-- <button v-on:click="logout()">Logout</button> -->
     </div>
   </div>
 </template>
@@ -47,7 +40,6 @@
   @Component
   export default class HomePage extends Vue {
     private currentUserData = Session.get();
-    // private msg = this.currentUserData !== null ? JSON.parse(this.currentUserData).nama : "";
     private jsonData: any = [];
     
     constructor(){
@@ -63,14 +55,6 @@
         console.error(e);
       }
     }
-
-    /*public logout(): void{
-      localStorage.removeItem('currentUser');
-      router.push({name: "Login"});
-    }
-    public login(): void{
-      router.push({name: "Login"});
-    } */
   }
 
 </script>
