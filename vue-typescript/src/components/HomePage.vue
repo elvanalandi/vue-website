@@ -1,12 +1,12 @@
 <template>
   <div class="user">
-    <div v-if="currentUserData == null">
+    <!-- <div v-if="currentUserData == null">
       <h1>Login first!</h1>
       <br>
       <button v-on:click="login()">Login</button>
-    </div>
+    </div> -->
     <div v-if="currentUserData != null">
-      <h1>Welcome {{ msg }} </h1>
+      <!-- <h1>Welcome {{ msg }} </h1> -->
       <br>
       <table>
         <thead>
@@ -33,7 +33,7 @@
         </tbody>
       </table>
       <br>
-      <button v-on:click="logout()">Logout</button>
+      <!-- <button v-on:click="logout()">Logout</button> -->
     </div>
   </div>
 </template>
@@ -41,13 +41,14 @@
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator';
   import router from '../router';
-  import axios from 'axios';
-
+  import Axios from 'axios';
+  import Session from '../common/Session';
+  
   @Component
   export default class HomePage extends Vue {
-    /* private currentUserData = localStorage.getItem('currentUser');
-    private msg = this.currentUserData !== null ? JSON.parse(this.currentUserData).nama : "";
-    private jsonData = [];
+    private currentUserData = Session.get();
+    // private msg = this.currentUserData !== null ? JSON.parse(this.currentUserData).nama : "";
+    private jsonData: any = [];
     
     constructor(){
       super();
@@ -56,14 +57,14 @@
 
     async getUser() {
       try {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+        const response = await Axios.get('https://jsonplaceholder.typicode.com/users');
         this.jsonData = response.data;
       } catch (e){
         console.error(e);
       }
     }
 
-    public logout(): void{
+    /*public logout(): void{
       localStorage.removeItem('currentUser');
       router.push({name: "Login"});
     }

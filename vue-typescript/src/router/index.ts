@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home
   },
@@ -21,7 +21,7 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/login',
+    path: '/',
     name: 'Login',
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
   },
@@ -62,9 +62,9 @@ router.beforeEach((to: Route, from: Route, next: NavigationGuardNext) => {
   // }
 
   if(requiredAuth && !Session.isLogin()) {
-    return next({path: "/login"});
-  } else if (Session.isLogin() && deniedAuth) {
     return next({path: "/"});
+  } else if (Session.isLogin() && deniedAuth) {
+    return next({path: "/login"});
   }
 
   return next();
