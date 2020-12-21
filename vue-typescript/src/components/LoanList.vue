@@ -98,7 +98,7 @@
             }
         }
 
-        public onAddorEdit(){
+        public onAddOrEdit(){
             this.books = [];
             this.rows = 0;
 
@@ -109,7 +109,7 @@
             if (!this.isBeingRequest) {
                 this.isBeingRequest = true;
 
-                Axios.get( `${this.baseApi}/books/`, {
+                Axios.get( `${this.baseApi}books/`, {
                     responseType: "json",
                     params: {offset: this.books.length, limit: 3},
                     headers: {"Authorization": Session.get("token")}

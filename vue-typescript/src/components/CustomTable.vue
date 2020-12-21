@@ -4,7 +4,7 @@
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <slot name='title' />
                 <button v-if="canAdd" type="button" class="btn btn-info"
-                    @click="() => onAddorEdit">
+                    @click="() => onAddOrEdit()">
                     Add
                 </button>
             </div>
@@ -57,8 +57,7 @@
                 </tr>
                 <tr slot="onRequestOrEmptyData" class="text-center">
                     <td :colspan="(totalColumn + (hasAction ? 1: 0))">
-                        <span v-if="isBeingRequest"
-                                class="spinner-border text-dark" role="status">
+                        <span v-if="isBeingRequest" class="spinner-border text-dark" role="status">
                             <span class="sr-only"> </span>
                         </span>
                         <span v-else>No data found</span>
@@ -94,13 +93,13 @@
         public validate: (record: E) => boolean;
 
         @Prop({default: 1})
-        public totalColumn!: number;
+        public totalColumn: number;
 
         @Prop({default: true})
-        public canAdd!: boolean;
+        public canAdd: boolean;
 
         @Prop({default: true})
-        public canEdit!: boolean;
+        public canEdit: boolean;
 
         @Prop({default: true})
         public canDelete: boolean;
@@ -125,7 +124,7 @@
             this.doFind();
         }
 
-        public onAddorEdit(record: E = null){
+        public onAddOrEdit(record: E = null){
             if (this.record !== null){
                 this.$notify({
                     group: 'userNotification',

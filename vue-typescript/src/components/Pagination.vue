@@ -41,17 +41,13 @@ import { Prop, Watch } from 'vue-property-decorator';
 
 export default class Pagination extends Vue {
     
-    @Prop({default: "div"})
-    public rootTag: string;
+    public rootTag: string = "div";
 
-    @Prop({default: ""})
-    public rootClass: string;
+    public rootClass: string = "";
 
-    @Prop({default: "div"})
-    public renderContainerTag: string;
+    public renderContainerTag: string = "div";
 
-    @Prop({default: ""})
-    public renderContainerClass: string;
+    public renderContainerClass: string = "";
 
     @Prop({default: 0})
     public offset: number;
@@ -59,11 +55,9 @@ export default class Pagination extends Vue {
     @Prop({default: 5})
     public limit: number;
 
-    @Prop({default: false})
-    public isBeingRequest: boolean;
+    public isBeingRequest: boolean = false;
 
-    @Prop({default: []})
-    public datas: Array<any>;
+    public datas: Array<any> = [];
 
     @Prop({default: 0})
     public rows: number;

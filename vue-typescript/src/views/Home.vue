@@ -15,8 +15,8 @@
         </div>
       </li>
     </ul>
-    <book-list />
-    <loan-list />
+    <book-list/>
+    <loan-list/>
   </div>
 </template>
 
@@ -42,7 +42,6 @@
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
   .home-page {
     color: #404E67;
