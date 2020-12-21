@@ -6,7 +6,7 @@
                       :validate="doValidate"
                       :canEdit="user.isAdmin"
                       :canDelete="user.isAdmin"
-                      @onAddOrEdit="onAddOrEdit">
+                      @onAddOrEdit="onAddOrEdit()">
             <h2 slot="title">Loans</h2>
             <template slot="renderedTh">
                 <th>Book Name</th>
