@@ -1,23 +1,35 @@
 <template>
-  <div class="user">
-    <router-link :to="isRegister ? '/' : '/?register=true'">
-      Sign {{isRegister ? 'In' : 'Up'}}
-    </router-link>
-    <h1>Sign {{isRegister ? 'Up' : 'In'}}</h1>
-    <form @submit.prevent="doSubmit" @reset.prevent="doReset">
-      <input type="email" v-model="user.username" placeholder="Email" required>
-      <div v-if="isRegister">
-        <input type="text" v-model="user.profileName" placeholder="Profile Name" required>
-      </div>
-      <div v-if="isRegister">
-        <input type="text" v-model="user.address" placeholder="Address" required>
-      </div>
-      <input type="password" v-model="user.password" placeholder="*********" required>
-      <br>
-      <button type="submit">
-        {{isLoading ? "Loading..." : isRegister ? 'Register' : 'Login'}}
-      </button>
-    </form>
+  <div class="content-full d-flex no-block justify-content-center align-items-center position-relative">
+    <div class="card">
+      <article class="card-body">
+        <router-link :to="isRegister ? '/' : '/?register=true'" class="float-right btn btn-outline-primary">
+          Sign {{isRegister ? 'In' : 'Up'}}
+        </router-link>
+        <h4 class="card-title mb-4 mt-1">Sign {{isRegister ? 'Up' : 'In'}}</h4>
+        <form @submit.prevent="doSubmit" @reset.prevent="doReset">
+          <div class="form-group">
+            <input class="form-control" type="email" v-model="user.username" placeholder="Email" required>
+          </div>
+          <div v-if="isRegister" class="form-group">
+            <input class="form-control" type="text" v-model="user.profileName" placeholder="Profile Name" required>
+          </div>
+          <div v-if="isRegister" class="form-group">
+            <input class="form-control" type="text" v-model="user.address" placeholder="Address" required>
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="password" v-model="user.password" placeholder="*********" required>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block"> 
+              {{isLoading ? "Loading..." : isRegister ? 'Register' : 'Login'}}
+              <span v-if="isLoading" class="spinner-border spinner-border-sm text-light" role="status">
+                <span class="sr-only"></span>
+              </span>
+            </button>
+          </div>
+        </form>
+      </article>
+    </div>
   </div>
 </template>
 

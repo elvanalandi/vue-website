@@ -1,0 +1,202 @@
+<template>
+    <div class="custom-table table-responsive">
+        <div class="table-wrapper">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <slot name='title' />
+                <button v-if="canAdd" type="button" class="btn btn-info"
+                    @click="() => onAddorEdit">
+                Add
+                </button>
+            </div>
+            <pagination rootTag="table" rootClass="table table-bordered"   
+                        renderContainerTag="tbody" renderContainerClass="table-body"
+                        :isBeingRequest="isBeingRequest"
+                        :offset="offset" :limit="limit"
+                        :datas="records" :rows="rows"
+                        :maxLengthPagination="5"
+                        @onPagination="doFind">
+                <thead>
+                    <tr>
+                        <slot name="renderedTh" />
+                        <th v-if="hasAction" class="text-center">
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tr slot="onRenderedData" slot-scope="{data,index}">
+                    <slot name="renderedTd" :record="record" :data="data" :index="index"/>
+                    <td v-if="hasAction"
+                        class="d-md-flex justify-content-center align-item-center align-middle">
+                        <template v-if="record && record.id === data.id">
+                            <button type="button"
+                                    class="btn btn-sm btn-primary m-2 mt-md-0 mb-md-0"
+                                    @click="() => doSave(index)">
+                                Save
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-sm btn-warning m-2 mt-md-0 mb-md-0 text-white"
+                                    @click="onCancelAddOrEdit">
+                                Save
+                            </button>
+                            
+                            <button v-if="canEdit && data.id && !record" type="button"
+                                    class="btn btn-sm btn-warning m-2 mt-md-0 mb-md-0 text-white"
+                                    @click="() => onAddOrEdit(data)">
+                                Edit
+                            </button>
+                            <button v-if="canDelete && data.id && !record" type="button"
+                                    class="btn btn-sm btn-danger m-2 mt-md-0 mb-md-0 "
+                                    @click="() => doDelete(data, index)"
+                            >
+                                Delete
+                            </button>
+                        </template>
+                    </td>
+                </tr>
+                <tr slot="onRequestOrEmptyData" class="text-center">
+                    <td :colspan="(totalColumn + (hasAction ? 1: 0))">
+                        <span v-if="isBeingRequest"
+                                class="spinner-border text-dark" role="status">
+                            <span class="sr-only"> </span>
+                        </span>
+                        <span v-else>No data found</span>
+                    </td>
+                </tr>
+            </pagination>            
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+    import { get } from 'lodash';
+    import { Component, Prop, Vue } from 'vue-property-decorator';
+
+    import Axios, {AxiosResponse, AxiosError} from "axios";
+    import Pagination from './Pagination.vue';
+    import BaseEntity from "../entity/BaseEntity";
+    import Session from "./../common/Session";
+    import StatusCode from '../common/StatusCode';
+    import { Deserialize } from 'cerialize';
+    
+    @Component({components: {Pagination}})
+    export default class CustomTable<E extends BaseEntity> extends Vue{
+        @Prop({default: ""})
+        public baseApi!: string;
+
+        @Prop({default: BaseEntity})
+        public entity!: new () => E;
+
+        @Prop({default: () => true})
+        public validate: (record: E) => boolean = () => true;
+
+        @Prop({default: 1})
+        public totalColumn!: number;
+
+        @Prop({default: true})
+        public canAdd!: boolean;
+
+        @Prop({default: true})
+        public canEdit!: boolean;
+
+        @Prop({default: true})
+        public canDelete: boolean = true;
+
+        public isBeingRequest: boolean = false;
+
+        public record: E = null;
+
+        public records: Array<E> = [];
+
+        public offset: number = 0;
+
+        public limit: number = 5;
+
+        public rows: number = 0;
+
+        public get hasAction(){
+            return this.canAdd || this.canEdit || this.canDelete
+        }
+
+        public created(){
+            this.doFind();
+        }
+
+        public onAddorEdit(record: E = null){
+            if (this.record !== null){
+                this.$notify({
+                    group: 'userNotification',
+                    title: 'Please finish previous step or cancel it'
+                });
+            }else{
+                if (record === null){
+                    this.record = new this.entity();
+                    this.records.unshift(new this.entity());
+                }else{
+                    this.record = record.clone();
+                }
+
+                this.$emit('onAddOrEdit');
+            }
+        }
+
+        public onCancelAddOrEdit(){
+            if (this.record !==null){
+                if(!this.record.id){
+                    this.records.splice(0,1);
+                }
+
+                this.$notify({
+                    group: 'userNotification',
+                    title: 'Cancel ${this.record.id ? "edit" : "add new"} data'
+                });
+                this.$nextTick(() => this.record = null);
+            }
+        }
+
+        public doFind(offset: number = this.offset, revert?: Function){
+            if (!this.isBeingRequest){
+                this.isBeingRequest = true;
+
+                Axios.get(this.baseApi,{
+                    responseType: "json",
+                    params: {offset, limit: this.limit},
+                    headers: {"Authorization": Session.get("token")}
+                }).then((response: AxiosResponse) =>{
+                    if(get(response,"data.status") === StatusCode.OPERATION_COMPLETE){
+                        this.records = Deserialize(get(response, "data.data", []), this.entity);
+                        this.rows = get(response, "data.rows", 0);
+                        this.offset = offset;
+                    }else{
+                        this.$notify({
+                            group: 'userNotification',
+                            title: StatusCode.DATA_NOT_FOUND
+                        });
+                    }
+                }).catch((error: AxiosError) => {
+                    console.error(error);
+                    this.$notify({
+                        group: 'userNotification',
+                        title: StatusCode.CONNECTION_FAILED
+                    });
+
+                    if(typeof revert === "function"){
+                        revert();
+                    }
+                }).finally(() =>{
+                    this.isBeingRequest = false;
+                });
+            }
+        }
+
+        public doSafe(){
+
+        }
+
+        public doDelete(){
+
+        }  
+
+    }
+
+</script>

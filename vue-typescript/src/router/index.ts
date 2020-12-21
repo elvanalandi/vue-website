@@ -47,7 +47,7 @@ router.beforeEach((to: Route, from: Route, next: NavigationGuardNext) => {
   if(requiredAuth && !Session.isLogin()) {
     return next({path: "/"});
   } else if (Session.isLogin() && deniedAuth) {
-    return next({path: "/login"});
+    return next({path: "/home"});
   }
 
   return next();
