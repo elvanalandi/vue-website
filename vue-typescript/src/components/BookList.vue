@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-  import { Component, Prop, Vue } from 'vue-property-decorator';
+  import { Component, Vue } from 'vue-property-decorator';
   import Book from '../entity/Book';
   import LibraryUser from '../entity/LibraryUser';
   import Session from '../common/Session';

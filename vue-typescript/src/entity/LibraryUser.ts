@@ -2,7 +2,7 @@ import BaseEntity from "./BaseEntity";
 import { Role } from "../common/Role";
 import { deserialize, inheritSerialization, serialize, serializeAs } from "cerialize";
 
-inheritSerialization(BaseEntity)
+@inheritSerialization(BaseEntity)
 export default class LibraryUser extends BaseEntity {
 
     @deserialize

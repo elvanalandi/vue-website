@@ -21,15 +21,14 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
+  import { Component, Vue, Prop } from 'vue-property-decorator';
   import Session from '../common/Session';
   import LibraryUser from '../entity/LibraryUser';
   import BookList from '../components/BookList.vue';
   import LoanList from '../components/LoanList.vue';
-  import { Component, Prop } from 'vue-property-decorator';
 
-  @Component({component: {BookList, LoanList}})
-  export default class HomePage extends Vue {
+  @Component({components: {BookList, LoanList}})
+  export default class Home extends Vue {
     
     public get user(): LibraryUser {
       return Session.get();

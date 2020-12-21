@@ -5,14 +5,16 @@
                 <slot name='title' />
                 <button v-if="canAdd" type="button" class="btn btn-info"
                     @click="() => onAddorEdit">
-                Add
+                    Add
                 </button>
             </div>
             <pagination rootTag="table" rootClass="table table-bordered"   
                         renderContainerTag="tbody" renderContainerClass="table-body"
                         :isBeingRequest="isBeingRequest"
-                        :offset="offset" :limit="limit"
-                        :datas="records" :rows="rows"
+                        :offset="offset" 
+                        :limit="limit"
+                        :datas="records" 
+                        :rows="rows"
                         :maxLengthPagination="5"
                         @onPagination="doFind">
                 <thead>
@@ -37,7 +39,7 @@
                             <button type="button"
                                     class="btn btn-sm btn-warning m-2 mt-md-0 mb-md-0 text-white"
                                     @click="onCancelAddOrEdit">
-                                Save
+                                Cancel
                             </button>
                             
                             <button v-if="canEdit && data.id && !record" type="button"
@@ -46,9 +48,8 @@
                                 Edit
                             </button>
                             <button v-if="canDelete && data.id && !record" type="button"
-                                    class="btn btn-sm btn-danger m-2 mt-md-0 mb-md-0 "
-                                    @click="() => doDelete(data, index)"
-                            >
+                                    class="btn btn-sm btn-danger m-2 mt-md-0 mb-md-0"
+                                    @click="() => doDelete(data, index)">
                                 Delete
                             </button>
                         </template>
@@ -73,9 +74,11 @@
     import { Component, Prop, Vue } from 'vue-property-decorator';
 
     import Axios, {AxiosResponse, AxiosError} from "axios";
+
+    //@ts-ignore
     import Pagination from './Pagination.vue';
-    import BaseEntity from "../entity/BaseEntity";
-    import Session from "./../common/Session";
+    import BaseEntity from '../entity/BaseEntity';
+    import Session from './../common/Session';
     import StatusCode from '../common/StatusCode';
     import { Deserialize } from 'cerialize';
     
@@ -88,7 +91,7 @@
         public entity!: new () => E;
 
         @Prop({default: () => true})
-        public validate: (record: E) => boolean = () => true;
+        public validate: (record: E) => boolean;
 
         @Prop({default: 1})
         public totalColumn!: number;
@@ -100,7 +103,7 @@
         public canEdit!: boolean;
 
         @Prop({default: true})
-        public canDelete: boolean = true;
+        public canDelete: boolean;
 
         public isBeingRequest: boolean = false;
 
@@ -189,14 +192,75 @@
             }
         }
 
-        public doSafe(){
+        public doSave(index: number){
+            if(this.validate(this.record)) {
+                this.isBeingRequest = true;
 
+                Axios.request({
+                    url: this.baseApi,
+                    responseType: "json",
+                    data: this.record.serialize(),
+                    method: this.record.id ? "put" : "post",
+                    headers: {"Authorization": Session.get("token")}
+                }).then((response: AxiosResponse) => {
+                    const status: string = get(response, "data.status");
+
+                    if(status === StatusCode.SAVE_SUCCESS || status === StatusCode.UPDATE_SUCCESS) {
+                        this.$set(this.records, index, get(response, "data.data"));
+
+                        this.$nextTick(() => this.record = null);
+                    }
+
+                    this.$notify({
+                        group: 'userNotification',
+                        title: status
+                    });
+                }).catch((error: AxiosError) => {
+                    console.error(error);
+                    this.$notify({
+                        group: 'userNotification',
+                        title: StatusCode.CONNECTION_FAILED
+                    });
+                }).finally(() => {
+                    this.isBeingRequest = false;
+                });
+            } else {
+                this.$notify({
+                    group: 'userNotification',
+                    title: 'Please fill all field'
+                });
+            }
         }
 
-        public doDelete(){
+        public doDelete(record: E, index: number){
+            if (record.id && confirm("Are you sure delete this item?")) {
+                this.isBeingRequest = true;
 
+                Axios.delete(`${this.baseApi}${record.id}`, {
+                    responseType: "json",
+                    headers: {"Authorization": Session.get("token")}
+                }).then((response: AxiosResponse) => {
+                    const status: string = get(response, "data.status");
+
+                    if(status === StatusCode.DELETE_SUCCESS) {
+                        this.records.splice(index, 1);
+                    }
+
+                    this.$notify({
+                        group: 'userNotification',
+                        title: status
+                    });
+                }).catch((error: AxiosError) => {
+                    console.error(error);
+                    
+                    this.$notify({
+                        group: 'userNotification',
+                        title: StatusCode.CONNECTION_FAILED
+                    });
+                }).finally(() => {
+                    this.isBeingRequest = false;
+                });
+            }
         }  
-
     }
-
 </script>

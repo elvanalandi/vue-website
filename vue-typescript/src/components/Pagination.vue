@@ -3,7 +3,7 @@
         <component :is="rootTag" :class="rootClass">
             <slot></slot>
             <component v-if="!isBeingRequest && tdatas.length > 0"
-                :is="renderContainerTag" :class="renderContainerClass">
+                       :is="renderContainerTag" :class="renderContainerClass">
                 <template v-for="(data, index) in tdatas">
                     <slot name="onRenderedData" :data="data" :index="index" :currentPage="currentPage" />
                 </template>
@@ -35,9 +35,8 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
-    import Session from './../common/Session'
-    import { Prop, Watch } from 'vue-property-decorator';
+    import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
+    import Session from './../common/Session';
 
     export default class Pagination extends Vue {
 

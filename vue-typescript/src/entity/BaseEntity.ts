@@ -1,5 +1,5 @@
 import * as lodash from "lodash";
-import { deserialize, serialize, Deserialize, Serialize } from "cerialize";
+import { deserialize, serialize, Deserialize, Serialize, inheritSerialization } from "cerialize";
 
 export default abstract class BaseEntity {
 
@@ -48,5 +48,13 @@ export default abstract class BaseEntity {
         }
 
         return Array.isArray(param) ? param.map(parse) : parse(param);
+    }
+
+    public static OnSerialized(instance: BaseEntity, json:any){
+        BaseEntity.OnNormalize(json);
+    }
+
+    public static OnDeserialized(instance: BaseEntity, json:any){
+        BaseEntity.OnNormalize(instance);
     }
 }
