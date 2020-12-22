@@ -20,7 +20,7 @@
                 <li v-for="(pagination, index) in paginations" :key="`pagination-${index}`"
                     :class="`${pagination.className} ${pagination.value === '...' ? 'disabled' : ''}`"
                     :style="`cursor: ${pagination.value === '...' ? 'not-allowed' : 'pointer'}`">
-                    <a href='#' class='page-link' @click="(e) => onPagination(e,pagination)">
+                    <a href="#" class="page-link" @click="(e) => onPagination(e,pagination)">
                         {{pagination.value}}
                     </a>
                 </li>
@@ -37,17 +37,22 @@
 <script lang="ts">
 import Vue from 'vue'
 import Session from './../common/Session'
-import { Prop, Watch } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 
+@Component
 export default class Pagination extends Vue {
     
-    public rootTag: string = "div";
+    @Prop({default: "div"})
+    public rootTag: string;
 
-    public rootClass: string = "";
+    @Prop({default: ""})
+    public rootClass: string;
 
-    public renderContainerTag: string = "div";
+    @Prop({default: "div"})
+    public renderContainerTag: string;
 
-    public renderContainerClass: string = "";
+    @Prop({default: ""})
+    public renderContainerClass: string;
 
     @Prop({default: 0})
     public offset: number;
@@ -55,9 +60,11 @@ export default class Pagination extends Vue {
     @Prop({default: 5})
     public limit: number;
 
-    public isBeingRequest: boolean = false;
+    @Prop({default: false})
+    public isBeingRequest: boolean;
 
-    public datas: Array<any> = [];
+    @Prop({default: []})
+    public datas: Array<any>;
 
     @Prop({default: 0})
     public rows: number;

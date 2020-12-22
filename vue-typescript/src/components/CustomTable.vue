@@ -27,8 +27,7 @@
                 </thead>
                 <tr slot="onRenderedData" slot-scope="{data,index}">
                     <slot name="renderedTd" :record="record" :data="data" :index="index"/>
-                    <td v-if="hasAction"
-                        class="d-md-flex justify-content-center align-item-center align-middle">
+                    <td v-if="hasAction" class="d-md-flex justify-content-center align-item-center align-middle">
                         <template v-if="record && record.id === data.id">
                             <button type="button"
                                     class="btn btn-sm btn-primary m-2 mt-md-0 mb-md-0"
@@ -36,8 +35,7 @@
                                 Save
                             </button>
 
-                            <button type="button"
-                                    class="btn btn-sm btn-warning m-2 mt-md-0 mb-md-0 text-white"
+                            <button type="button" class="btn btn-sm btn-warning m-2 mt-md-0 mb-md-0 text-white"
                                     @click="onCancelAddOrEdit">
                                 Cancel
                             </button>
