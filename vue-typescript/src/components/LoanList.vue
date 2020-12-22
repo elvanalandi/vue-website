@@ -21,12 +21,14 @@
                             class="form-control"
                             @click="(e) => onChangeBook(e.target.value, record)">
                         <option value="" disabled selected>Please select book</option>
-                        <option v-for="(book, idx) in books" :key="`${idx}-{book.id}`" :value="book.id"></option> <!--belum selesai -->
+                        <option v-for="(book, idx) in books" :key="`${idx}-{book.id}`" :value="book.id">
+                            {{book.title}}
+                        </option>
                         <option v-if="books.length < rows" value="loadMore" class="text-info">
                             Load more
                         </option>
                     </select>
-                    <span v-else>{{data.book.name}}</span>
+                    <span v-else>{{data.book.title}}</span>
                 </td>
                 <td class="align-middle">
                     <span v-if="record && record.id === data.id">

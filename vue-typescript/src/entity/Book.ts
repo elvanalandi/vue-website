@@ -1,13 +1,13 @@
-import { deserialize, deserializeAs, inheritSerialization, serialize } from "cerialize";
+import { deserialize, deserializeAs, inheritSerialization, serialize, serializeAs } from "cerialize";
 
 import BaseEntity from "./BaseEntity";
 
 @inheritSerialization(BaseEntity)
 export default class Book extends BaseEntity{
 
-    @deserializeAs('title')
+    @deserialize
     @serialize
-    public name: string = "";
+    public title: string = "";
 
     @deserialize
     @serialize

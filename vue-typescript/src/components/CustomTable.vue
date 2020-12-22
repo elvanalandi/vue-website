@@ -147,7 +147,7 @@
 
                 this.$notify({
                     group: 'userNotification',
-                    title: 'Cancel `${this.record.id ? "edit" : "add new"}` data'
+                    title: `Cancel ${this.record.id ? "edit" : "add new"} data`
                 });
                 this.$nextTick(() => this.record = null);
             }

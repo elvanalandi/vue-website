@@ -18,8 +18,8 @@
       <template slot="renderedTd" slot-scope="{record, data, index}">
         <td class="align-middle">
           <input v-if="record && record.id === data.id" class="form-control" placeholder="Name"
-                 type="text" v-model="record.name">
-          <span v-else>{{data.name}}</span>
+                 type="text" v-model="record.title">
+          <span v-else>{{data.title}}</span>
         </td>
         <td class="align-middle">
           <input v-if="record && record.id === data.id" class="form-control" placeholder="Description"
@@ -64,7 +64,7 @@
     }
 
     public doValidate(book: Book) {
-        const keys: Array<keyof Book> = ["name", "description", "isbn", "author", "publisher"];
+        const keys: Array<keyof Book> = ["title", "description", "isbn", "author", "publisher"];
 
         return keys.every(prop => book[prop] != "");
     }
