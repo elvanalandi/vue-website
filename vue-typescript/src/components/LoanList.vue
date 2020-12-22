@@ -82,7 +82,7 @@
         }
 
         public onChangeBook(value: string, loan: Loan){
-            if(value = "loadMore") {
+            if(value == "loadMore") {
                 this.doFind();
             } else {
                 const index: number = this.books.findIndex(book => book.id === parseInt(value));

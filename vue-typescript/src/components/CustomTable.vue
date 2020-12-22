@@ -81,10 +81,10 @@
     @Component({components: {Pagination}})
     export default class CustomTable<E extends BaseEntity> extends Vue{
         @Prop({default: ""})
-        public baseApi!: string;
+        public baseApi: string;
 
         @Prop({default: BaseEntity})
-        public entity!: new () => E;
+        public entity: new () => E;
 
         @Prop({default: () => true})
         public validate: (record: E) => boolean;
@@ -201,7 +201,7 @@
                 }).then((response: AxiosResponse) => {
                     const status: string = get(response, "data.status");
 
-                    if(status === StatusCode.SAVE_SUCCESS || status === StatusCode.UPDATE_SUCCESS) {
+                    if(status === StatusCode.SAVE_SUCCESS || status === StatusCode.UPDATE_SUCCESS || status === StatusCode.OPERATION_COMPLETE) {
                         this.$set(this.records, index, get(response, "data.data"));
 
                         this.$nextTick(() => this.record = null);
