@@ -6,13 +6,13 @@
                       :validate="doValidate"
                       :canEdit="user.isAdmin"
                       :canDelete="user.isAdmin"
-                      @onAddOrEdit="onAddOrEdit()">
+                      @onAddOrEdit="onAddOrEdit">
             <h2 slot="title">Loans</h2>
             <template slot="renderedTh">
                 <th>Book Name</th>
                 <th>ISBN</th>
                 <th class="text-center">Status</th>
-                <th class="text-center">Loan Data</th>
+                <th class="text-center">Loan Date</th>
             </template>
             <template slot="renderedTd" slot-scope="{record, data, index}">
                 <td class="align-middle">
@@ -40,7 +40,7 @@
                     {{data.status || "-"}}
                 </td>
                 <td class="align-middle text-center">
-                    {{data.loanData}}
+                    {{data.loanDate}}
                 </td>
             </template>
         </custom-table>

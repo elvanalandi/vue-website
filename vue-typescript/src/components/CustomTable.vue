@@ -2,19 +2,17 @@
     <div class="custom-table table-responsive">
         <div class="table-wrapper">
             <div class="d-flex justify-content-between align-items-center mb-2">
-                <slot name='title' />
+                <slot name="title" />
                 <button v-if="canAdd" type="button" class="btn btn-info"
-                    @click="() => onAddOrEdit()">
+                        @click="() => onAddOrEdit()">
                     Add
                 </button>
             </div>
-            <pagination rootTag="table" rootClass="table table-bordered"   
+            <pagination rootTag="table" rootClass="table table-bordered" 
                         renderContainerTag="tbody" renderContainerClass="table-body"
                         :isBeingRequest="isBeingRequest"
-                        :offset="offset" 
-                        :limit="limit"
-                        :datas="records" 
-                        :rows="rows"
+                        :offset="offset" :limit="limit"
+                        :datas="records" :rows="rows"
                         :maxLengthPagination="5"
                         @onPagination="doFind">
                 <thead>
@@ -27,7 +25,8 @@
                 </thead>
                 <tr slot="onRenderedData" slot-scope="{data,index}">
                     <slot name="renderedTd" :record="record" :data="data" :index="index"/>
-                    <td v-if="hasAction" class="d-md-flex justify-content-center align-item-center align-middle">
+                    <td v-if="hasAction" 
+                        class="d-md-flex justify-content-center align-item-center align-middle">
                         <template v-if="record && record.id === data.id">
                             <button type="button"
                                     class="btn btn-sm btn-primary m-2 mt-md-0 mb-md-0"
@@ -35,22 +34,22 @@
                                 Save
                             </button>
 
-                            <button type="button" class="btn btn-sm btn-warning m-2 mt-md-0 mb-md-0 text-white"
+                            <button type="button" 
+                                    class="btn btn-sm btn-warning m-2 mt-md-0 mb-md-0 text-white"
                                     @click="onCancelAddOrEdit">
                                 Cancel
                             </button>
-                            
-                            <button v-if="canEdit && data.id && !record" type="button"
-                                    class="btn btn-sm btn-warning m-2 mt-md-0 mb-md-0 text-white"
-                                    @click="() => onAddOrEdit(data)">
-                                Edit
-                            </button>
-                            <button v-if="canDelete && data.id && !record" type="button"
-                                    class="btn btn-sm btn-danger m-2 mt-md-0 mb-md-0"
-                                    @click="() => doDelete(data, index)">
-                                Delete
-                            </button>
                         </template>
+                        <button v-if="canEdit && data.id && !record" type="button"
+                                class="btn btn-sm btn-warning m-2 mt-md-0 mb-md-0 text-white"
+                                @click="() => onAddOrEdit(data)">
+                            Edit
+                        </button>
+                        <button v-if="canDelete && data.id && !record" type="button"
+                                class="btn btn-sm btn-danger m-2 mt-md-0 mb-md-0"
+                                @click="() => doDelete(data, index)">
+                            Delete
+                        </button>
                     </td>
                 </tr>
                 <tr slot="onRequestOrEmptyData" class="text-center">
@@ -115,7 +114,7 @@
         public rows: number = 0;
 
         public get hasAction(){
-            return this.canAdd || this.canEdit || this.canDelete
+            return this.canAdd || this.canEdit || this.canDelete;
         }
 
         public created(){
@@ -136,7 +135,7 @@
                     this.record = record.clone();
                 }
 
-                this.$emit('onAddOrEdit');
+                this.$emit("onAddOrEdit");
             }
         }
 
@@ -148,7 +147,7 @@
 
                 this.$notify({
                     group: 'userNotification',
-                    title: 'Cancel ${this.record.id ? "edit" : "add new"} data'
+                    title: 'Cancel `${this.record.id ? "edit" : "add new"}` data'
                 });
                 this.$nextTick(() => this.record = null);
             }

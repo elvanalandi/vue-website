@@ -57,7 +57,7 @@
   export default class BookList extends Vue {
     public baseApi: string = "http://202.152.159.164:8088/perpus/books/";
 
-    public entity: new () => Book = Book;
+    public entity: new() => Book = Book;
 
     public get user(): LibraryUser {
         return Session.get();
