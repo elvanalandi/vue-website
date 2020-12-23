@@ -202,7 +202,7 @@
                     const status: string = get(response, "data.status");
 
                     if(status === StatusCode.SAVE_SUCCESS || status === StatusCode.UPDATE_SUCCESS || status === StatusCode.OPERATION_COMPLETE) {
-                        this.$set(this.records, index, get(response, "data.data"));
+                        this.$set(this.records, index, Deserialize(get(response, "data.data"), this.entity));
 
                         this.$nextTick(() => this.record = null);
                     }

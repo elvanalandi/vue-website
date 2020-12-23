@@ -17,7 +17,7 @@
             <input class="form-control" type="text" v-model="user.address" placeholder="Address" required>
           </div>
           <div class="form-group">
-            <input class="form-control" type="password" v-model="user.password" placeholder="*********" required>
+            <input class="form-control" type="password" v-model="user.password" placeholder="Password" required>
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block"> 
