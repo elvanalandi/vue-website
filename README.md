@@ -1,1 +1,1 @@
-# A website made by Vue JS
+# A website made using Vue JS
